@@ -3,7 +3,11 @@ class m_pindah_barang extends CI_Model{
 
 	
 	  function tampil($toko){
-    	$hsl=$this->db->query("SELECT * from tbl_pesan_barang ");
+    	$hsl=$this->db->query("SELECT * from tbl_pesan_barang where toko not in ('$toko') and bayar =0 ");
+		return $hsl;
+    }
+     function update_pesanan($id){
+    	$hsl=$this->db->query("update tbl_pesan_barang set bayar = 1 where beli_nofak='$id' ");
 		return $hsl;
     }
       function tampil_pesan($toko){
@@ -11,7 +15,7 @@ class m_pindah_barang extends CI_Model{
 		return $hsl;
     }
      function tampil_detail($toko,$id){
-    	$hsl=$this->db->query("SELECT d_beli_id,d_beli_barang_id,d_beli_kode,d_beli_harga,d_beli_jumlah,barang_nama,toko from tbl_detail_pesan p inner join tbl_barang_toko  b on p.d_beli_barang_id=b.barang_id where d_beli_kode='$id' and toko='$toko' ");
+    	$hsl=$this->db->query("SELECT d_beli_id,d_beli_barang_id,d_beli_kode,d_beli_harga,d_beli_jumlah,barang_nama,toko from tbl_detail_pesan p inner join tbl_barang_toko  b on p.d_beli_barang_id=b.barang_id where d_beli_nofak='$id' and toko='$toko' ");
 		return $hsl;
     }
     	function simpan_bayar_beli($kobar,$toko){
