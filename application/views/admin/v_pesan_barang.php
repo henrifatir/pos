@@ -9,12 +9,12 @@
     <meta name="description" content="Produk By Mfikri.com">
     <meta name="author" content="Primanto_tech">
 
-    <title>Welcome To Point of Sale Apps</title>
+    <title>Welcome To Monica Store</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url().'assets/css/bootstrap.min.css'?>" rel="stylesheet">
-    <link href="<?php echo base_url().'assets/css/style.css'?>" rel="stylesheet">
-    <link href="<?php echo base_url().'assets/css/font-awesome.css'?>" rel="stylesheet">
+	<link href="<?php echo base_url().'assets/css/style.css'?>" rel="stylesheet">
+	<link href="<?php echo base_url().'assets/css/font-awesome.css'?>" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="<?php echo base_url().'assets/css/4-col-portfolio.css'?>" rel="stylesheet">
     <link href="<?php echo base_url().'assets/css/dataTables.bootstrap.min.css'?>" rel="stylesheet">
@@ -49,39 +49,40 @@
         <div class="row">
             <div class="col-lg-12">
                 
-            <form  id='form1' action="<?php echo base_url().'admin/pesan_barang/add_to_cart'?>" method="post">
+            <form  id='form1' action="<?php echo base_url().'admin/pembelian/add_to_cart'?>" method="post">
             <table>
-                <tr>
-                    <th style="width:100px;padding-bottom:5px;">No Faktur</th>
-                    <th style="width:300px;padding-bottom:5px;"><input type="text" name="nofak" value="<?php echo $this->session->userdata('nofak');?>" class="form-control input-sm" style="width:200px;" required></th>
-                    <th style="width:90px;padding-bottom:5px;">Suplier</th>
-                    <td style="width:350px;">
-                    <select name="suplier" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Suplier" data-width="100%" required>
-                        <?php foreach ($sup->result_array() as $i) {
-                            $id_sup=$i['suplier_id'];
-                            $nm_sup=$i['suplier_nama'];
-                            $al_sup=$i['suplier_alamat'];
-                            $notelp_sup=$i['suplier_notelp'];
-                            $sess_id=$this->session->userdata('suplier');
-                            if($sess_id==$id_sup)
-                                echo "<option value='$id_sup' selected>$nm_sup - $al_sup - $notelp_sup</option>";
-                            else
-                                echo "<option value='$id_sup'>$nm_sup - $al_sup - $notelp_sup</option>";
-                        }?>
-                    </select>
-                    </td>
-                </tr>
-                <tr>
+                  <tr>
+                   
                     <th>Tanggal</th>
                     <td>
                         <div class='input-group date' id='datepicker' style="width:200px;">
-                            <input type='text' name="tgl" class="form-control" value="<?php echo $this->session->userdata('tglfak');?>" placeholder="Tanggal..." required/>
+                            <input type='text' id="tgl" name="tgl" class="form-control" value="<?php echo $this->session->userdata('tglfak');?>" placeholder="Tanggal..." required/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
                     </td>
                 </tr>
+                
+                <tr>
+                    
+                    <th style="width:90px;padding-bottom:5px;">Toko</th>
+                    <td style="width:350px;">
+                    <select name="suplier" id="suplier" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Suplier" data-width="100%" required>
+                        <?php foreach ($sup->result_array() as $i) {
+                            $id_sup=$i['id'];
+                            $nm_sup=$i['nama'];
+                            $al_sup=$i['alamat'];
+                            $sess_id=$this->session->userdata('suplier');
+                            if($sess_id==$id_sup)
+                                echo "<option value='$id_sup' selected>$nm_sup - $al_sup</option>";
+                            else
+                                echo "<option value='$id_sup'>$nm_sup</option>";
+                        }?>
+                    </select>
+                    </td>
+                </tr>
+              
             </table><hr/>
              <div id='tampilbarang'><center><input placeholder="Scan Barcode" type="text" name="cari" id='cari' style="width: 50%;height: 40px;font-size: 24px;text-align: center;" onfocus="true"></center></div>
             <table>
@@ -120,7 +121,7 @@
                          <td style="text-align:right;"><?php echo number_format($items['harga']);?></td>
                          <td style="text-align:center;"><?php echo number_format($items['qty']);?></td>
                          <td style="text-align:right;"><?php echo number_format($items['subtotal']);?></td>
-                         <td style="text-align:center;"><a href="<?php echo base_url().'admin/pembelian/remove/'.$items['rowid'];?>" class="btn btn-warning btn-xs"><span class="fa fa-close"></span> Batal</a></td>
+                         <td style="text-align:center;"><a href="<?php echo base_url().'admin/pesan_barang/remove/'.$items['rowid'];?>" class="btn btn-warning btn-xs"><span class="fa fa-close"></span> Batal</a></td>
                     </tr>
                     <?php $i++; ?>
                     <?php endforeach; ?>
@@ -182,7 +183,7 @@
                             <td style="text-align:right;"><?php echo 'Rp '.number_format($harjul);?></td>
                             <td style="text-align:center;"><?php echo $stok;?></td>
                             <td style="text-align:center;">
-                                <form action="<?php echo base_url().'admin/pembelian/add_to_cart_beli'?>" method="post">
+                                <form action="<?php echo base_url().'admin/pesan_barang/add_to_cart_beli'?>" method="post">
                             <input type="hidden" name="kode_brg" value="<?php echo $id?>">
                             <input type="hidden" name="nabar" value="<?php echo $nm;?>">
                             <input type="hidden" name="satuan" value="<?php echo $satuan;?>">
@@ -275,11 +276,22 @@
         $(document).ready(function(){
             //Ajax kabupaten/kota insert
             $("#cari").focus();
+               $("#suplier").change(function(){
+             
+                   $.ajax({
+               type: "POST",
+               url : "<?php echo base_url().'admin/pesan_barang/sesi_nofak';?>",
+               data: {tgl:$('#tgl').val(),suplier:$('#suplier').val()},
+               success: function(msg){
+              // $('#detail_barang').html(msg);
+               }
+            });
+            }); 
             $("#kode_brg").keyup(function(){
                 var kobar = {kode_brg:$(this).val()};
                    $.ajax({
                type: "POST",
-               url : "<?php echo base_url().'admin/pesan_barang/get_barang';?>",
+               url : "<?php echo base_url().'admin/pesan_barang/get_barang_pesan';?>",
                data: kobar,
                success: function(msg){
                $('#detail_barang').html(msg);
@@ -304,7 +316,7 @@
               var kobar = {kode_brg:$('#cari').val()};
                    $.ajax({
                type: "POST",
-               url : "<?php echo base_url().'admin/pesan_barang/get_barang';?>",
+               url : "<?php echo base_url().'admin/pesan_barang/get_barang_pesan';?>",
                data: kobar,
                success: function(msg){
                $('#detail_barang').html(msg);
