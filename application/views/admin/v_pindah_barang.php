@@ -9,7 +9,7 @@
     <meta name="description" content="Produk By Mfikri.com">
     <meta name="author" content="Primanto_tech">
 
-    <title>Management Bayar Pembelian</title>
+    <title>Management Pindah Barang</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url().'assets/css/bootstrap.min.css'?>" rel="stylesheet">
@@ -37,8 +37,8 @@
             <div class="col-lg-12">
                 <?php $t=$this->session->userdata('toko'); ?>
                 <?php $i=$this->session->userdata('id_toko'); ?>
-                <h1 class="page-header">Pembayaran
-                    <small>Pembelian Barang</small> <?php echo $t?>
+                <h1 class="page-header">Pindah 
+                    <small>Barang</small> <?php echo $t?>
                    
                 </h1>
             </div>
@@ -52,9 +52,10 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;width:40px;">No</th>
-                        <th>No Faktur</th>
-                        <th>Suplier</th>
-                        <th>Tanggal Beli</th>
+                        <th>Faktur</th>
+                        <th>No Pesan</th>
+                        <th>Toko Pemesan</th>
+                        <th>Tanggal Pesan</th>
                         <th style="width:100px;text-align:center;">Aksi</th>
                     </tr>
                 </thead>
@@ -63,18 +64,21 @@
                     $no=0;
                     foreach ($bayar->result_array() as $a):
                         $no++;
+                        $nofak=$a['beli_nofak'];
                         $id=$a['beli_kode'];
                         $suplier=$a['toko'];
                         $tgl=$a['beli_tanggal'];
                 ?>
+
                     <tr>
                     
                         <td style="text-align:center;"><?php echo $no;?></td>
+                        <td style=""><?php echo $nofak;?></td>
                         <td style=""><?php echo $id;?></td>
                         <td style=""><?php echo $suplier;?></td>
                         <td style=""><?php echo $tgl;?></td>
                         <td style="text-align:center;">
-                         <a class="btn btn-xs btn-warning" href="../admin/detail_pindah_barang/detail/<?php echo $id?>" data-toggle="modal" title="Edit"><span class="fa fa-edit"></span> Edit</a>
+                         <a class="btn btn-xs btn-warning" href="../admin/detail_pindah_barang/detail/<?php echo $nofak?>" data-toggle="modal" title="Edit"><span class="fa fa-edit"></span> Edit</a>
                             <a class="btn btn-xs btn-danger" href="#modalHapusPelanggan<?php echo $id?>" data-toggle="modal" title="Hapus"><span class="fa fa-close"></span> Hapus</a>
                         </td>
                     </tr>
