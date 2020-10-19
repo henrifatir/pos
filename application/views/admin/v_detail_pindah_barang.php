@@ -9,7 +9,7 @@
     <meta name="description" content="Produk By Mfikri.com">
     <meta name="author" content="Primanto_tech">
 
-    <title>Management Bayar Pembelian</title>
+    <title>Detail Pesan Barang</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url().'assets/css/bootstrap.min.css'?>" rel="stylesheet">
@@ -48,14 +48,19 @@
         <!-- Projects Row -->
         <div class="row">
             <div class="col-lg-12">
+                  <div class="modal-header">
+                        <button style="width: 150px;height: 50px;" onclick="utama()">  
+                            <strong>ACC Pindah</strong> 
+                        </button>
+                        <input type="hidden" name="utama" value="<?php echo $utama;?>">
+                    </div>
             <table class="table table-bordered table-condensed" style="font-size:11px;" id="mydata">
                 <thead>
                     <tr>
                         <th style="text-align:center;width:40px;">No</th>
                         <th>No Faktur</th>
-                        <th>Suplier</th>
+                        <th>Nama Barang</th>
                         <th>Jumlah</th>
-                        <th>Tanggal Beli</th>
                         <th style="width:100px;text-align:center;">Aksi</th>
                     </tr>
                 </thead>
@@ -67,7 +72,6 @@
                         $id=$a['d_beli_kode'];
                         $suplier=$a['barang_nama'];
                         $jumlah=$a['d_beli_jumlah'];
-                        $tgl=$a['beli_tanggal'];
                 ?>
                     <tr>
                     
@@ -75,7 +79,6 @@
                         <td style=""><?php echo $id;?></td>
                         <td style=""><?php echo $suplier;?></td>
                         <td style=""><?php echo $jumlah;?></td>
-                        <td style=""><?php echo $tgl;?></td>
                         <td style="text-align:center;">
                          <a class="btn btn-xs btn-warning" href="#modalEditPelanggan<?php echo $id?>" data-toggle="modal" title="Edit"><span class="fa fa-edit"></span> Edit</a>
                             <a class="btn btn-xs btn-danger" href="#modalHapusPelanggan<?php echo $id?>" data-toggle="modal" title="Hapus"><span class="fa fa-close"></span> Hapus</a>
@@ -234,6 +237,17 @@
               $.ajax({
                type: "POST",
                url : "<?php echo base_url().'admin/barang/pindah';?>",
+               success: function(msg){
+               }
+           });
+        }
+    </script>
+    <script type="text/javascript">
+        function utama(){
+             $.ajax({
+               type: "POST",
+               url : "<?php echo base_url().'admin/detail_pindah_barang/update_pesanan';?>",
+               data: {kode:$('#utama').val()},
                success: function(msg){
                }
            });
