@@ -43,7 +43,7 @@ class Detail_pindah_barang extends CI_Controller{
 	function detail($id){
 	if($this->session->userdata('akses')=='1'){
 		$id_toko=$this->session->userdata('id_toko');
-		
+		$data['utama']=$id;
 		$data['data']=$this->m_barang->tampil_barang($id_toko);
 		$data['bayar']=$this->m_pindah_barang->tampil_detail($id_toko,$id);
 		$data['data']=$this->m_pindah_barang->tampil_pesan($id_toko);
@@ -51,6 +51,11 @@ class Detail_pindah_barang extends CI_Controller{
 	}else{
         echo "Halaman tidak ditemukan";
     }
+	}
+	function update_pesanan(){
+		$utama=$this->input->post('kode');
+		$this->m_pindah_barang->update_pesanan($utama);
+		redirect('admin/Detail_pindah_barang');
 	}
 	function print_label($id){
 		$id_toko=$this->session->userdata('id_toko');
