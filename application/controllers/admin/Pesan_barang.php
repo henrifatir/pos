@@ -15,21 +15,33 @@ class Pesan_barang extends CI_Controller{
 	if($this->session->userdata('akses')=='1'){
 		$id_toko=$this->session->userdata('id_toko');
 		$x['data']=$this->m_barang->tampil_barang($id_toko);
-		$x['sup']=$this->m_suplier->tampil_suplier();
+		$x['sup']=$this->m_suplier->tampil_toko($id_toko);
+		$tglfak=date('Y-m-d');
+		$this->session->set_userdata('tglfak',$tglfak);
 		$this->load->view('admin/v_pesan_barang',$x);
 	}else{
         echo "Halaman tidak ditemukan";
     }
 	}
-	function get_barang(){
+	function get_barang_pesan(){
 	if($this->session->userdata('akses')=='1'){
 		$kobar=$this->input->post('kode_brg');
 		$toko=$this->session->userdata('id_toko');
 		$x['brg']=$this->m_barang->get_barang($kobar,$toko);
-		$this->load->view('admin/v_detail_barang_beli',$x);
+		$this->load->view('admin/v_detail_pesan_barang',$x);
 	}else{
         echo "Halaman tidak ditemukan";
     }
+	}
+	function sesi_nofak(){
+		
+		$this->session->unset_userdata('tglfak');
+		$tglfak=$this->input->post('tgl');
+		$this->session->set_userdata('tglfak',$tglfak);
+		$this->session->unset_userdata('suplier');
+		$suplier=$this->input->post('suplier');
+		$this->session->set_userdata('suplier',$suplier);
+	
 	}
 	function add_to_cart_beli(){
 	if($this->session->userdata('akses')=='1' || $this->session->userdata('akses')=='2'){
@@ -76,7 +88,7 @@ class Pesan_barang extends CI_Controller{
 	}
 	function add_to_cart(){
 	if($this->session->userdata('akses')=='1'){
-		$nofak=$this->input->post('nofak');
+		//$nofak=$this->input->post('nofak');
 		$tgl=$this->input->post('tgl');
 		$toko=$this->session->userdata('id_toko');
 		$suplier=$this->input->post('suplier');
@@ -133,16 +145,17 @@ class Pesan_barang extends CI_Controller{
 	}
 	function simpan_pembelian(){
 	if($this->session->userdata('akses')=='1'){
-		$toko=$this->session->userdata('id_toko');
-		//$nofak=$this->session->userdata('nofak');
+
 		$tglfak=$this->session->userdata('tglfak');
 		$suplier=$this->session->userdata('suplier');
+		$toko=$this->session->userdata('suplier');
+		$nofak=$this->m_pesan_barang->get_nofak($toko);
 		if( !empty($tglfak) && !empty($suplier)){
 			$beli_kode=$this->m_pesan_barang->get_kobel();
-			$order_proses=$this->m_pesan_barang->simpan_pembelian($tglfak,$suplier,$beli_kode,$toko);
+			$order_proses=$this->m_pesan_barang->simpan_pembelian($tglfak,$suplier,$beli_kode,$toko,$nofak);
 			if($order_proses){
 				$this->cart->destroy();
-				//$this->session->unset_userdata('nofak');
+				$this->session->unset_userdata('nofak');
 				$this->session->unset_userdata('tglfak');
 				$this->session->unset_userdata('suplier');
 				echo $this->session->set_flashdata('msg','<label class="label label-success">Pembelian Berhasil di Simpan ke Database</label>');
