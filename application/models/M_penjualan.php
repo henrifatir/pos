@@ -12,8 +12,9 @@ class M_penjualan extends CI_Model{
 	}
 
 	function simpan_retur($kobar,$nabar,$satuan,$harjul,$qty,$keterangan,$id_toko){
-		$hsl=$this->db->query("INSERT INTO tbl_retur(retur_barang_id,retur_barang_nama,retur_barang_satuan,retur_harjul,retur_qty,retur_keterangan) VALUES ('$kobar','$nabar','$satuan','$harjul','$qty','$keterangan') where toko='$id_toko' ");
-		return $hsl;
+		$this->db->query("INSERT INTO tbl_retur(retur_barang_id,retur_barang_nama,retur_barang_satuan,retur_harjul,retur_qty,retur_keterangan,toko) VALUES ('$kobar','$nabar','$satuan','$harjul','$qty','$keterangan','$id_toko') ");
+		$this->db->query("update tbl_barang_toko set barang_stok=barang_stok  + '$qty' where barang_id='$kobar' and toko='$id_toko'");
+		return true;
 	}
 
 	function simpan_penjualan($nofak,$total,$jml_uang,$kembalian,$id_toko){

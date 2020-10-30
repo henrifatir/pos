@@ -52,7 +52,7 @@
                         <button style="width: 150px;height: 50px;" onclick="utama()">  
                             <strong>ACC Pindah</strong> 
                         </button>
-                        <input type="hidden" name="utama" value="<?php echo $utama;?>">
+                        <input type="hidden" name="utama" id="utama" value="<?php echo $utama;?>">
                     </div>
             <table class="table table-bordered table-condensed" style="font-size:11px;" id="mydata">
                 <thead>

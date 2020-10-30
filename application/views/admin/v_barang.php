@@ -95,6 +95,7 @@
                         <td><?php echo $kat_nama;?></td>
                         <td style="text-align:center;">
                             <a class="btn btn-xs btn-warning" href="#modalEditPelanggan<?php echo $id?>" data-toggle="modal" title="Edit"><span class="fa fa-edit"></span> Edit</a>
+                            <a class="btn btn-xs btn-warning" href="#modalEditAdjust<?php echo $id?>" data-toggle="modal" title="Edit"><span class="fa fa-edit"></span> Adjustmen</a>
                             <a class="btn btn-xs btn-danger" href="#modalHapusPelanggan<?php echo $id?>" data-toggle="modal" title="Hapus"><span class="fa fa-close"></span> Hapus</a>
                             <a class="btn btn-xs btn-success" href="../admin/barang/print_label/<?php echo $id?>" data-toggle="modal" title="Barcode"><span class="fa font-awesome"></span> Barcode</a>
                           
@@ -1153,6 +1154,114 @@
                             </div>
                         </div>
 
+                    </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                            <button type="submit" class="btn btn-info">Update</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+                </div>
+            <?php
+        }
+        ?>
+
+        <!-- ============ MODAL EDIT =============== -->
+        <?php
+                    foreach ($data->result_array() as $a) {
+                        $id=$a['barang_id'];
+                        $nm=$a['barang_nama'];
+                        $satuan=$a['barang_satuan'];
+                        $harpok=$a['barang_harpok'];
+                        $harjul=$a['barang_harjul'];
+                        $harjul_grosir=$a['barang_harjul_grosir'];
+                        $stok=$a['barang_stok'];
+                        $min_stok=$a['barang_min_stok'];
+                        $kat_id=$a['barang_kategori_id'];
+                        $kat_nama=$a['kategori_nama'];
+                    ?>
+                <div id="modalEditAdjust<?php echo $id?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <center><h3 class="modal-title" id="myModalLabel">Adjustmen Barang</h3></center>
+                    </div>
+                    <form class="form-horizontal" method="post" action="<?php echo base_url().'admin/barang/adjust_barang'?>">
+                        <div class="modal-body">
+                        <center><h3><label>Barang Awal</label></h3></center>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3" >Kode Barang</label>
+                            <div class="col-xs-9">
+                                <input name="kobar" class="form-control" type="text" value="<?php echo $id;?>" placeholder="Kode Barang..." style="width:335px;" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-3" >Nama Barang</label>
+                            <div class="col-xs-9">
+                                <input name="nabar" class="form-control" type="text" value="<?php echo $nm;?>" placeholder="Nama Barang..." style="width:335px;" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-3" >Kategori</label>
+                            <div class="col-xs-9">
+                                <select name="kategori" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Kategori" data-width="80%" placeholder="Pilih Kategori" required>
+                                <?php foreach ($kat2->result_array() as $k2) {
+                                    $id_kat=$k2['kategori_id'];
+                                    $nm_kat=$k2['kategori_nama'];
+                                    if($id_kat==$kat_id)
+                                        echo "<option value='$id_kat' selected>$nm_kat</option>";
+                                    else
+                                        echo "<option value='$id_kat'>$nm_kat</option>";
+                                }
+                                ?>
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-3" >Harga Pokok</label>
+                            <div class="col-xs-9">
+                                <input name="harpok" class="harpok form-control" type="text" value="<?php echo $harpok;?>" placeholder="Harga Pokok..." style="width:335px;" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-3" >Stok</label>
+                            <div class="col-xs-9">
+                                <input name="stok" class="form-control" type="number" value="<?php echo $stok;?>" placeholder="Stok..." style="width:335px;" required>
+                            </div>
+                        </div>
+                        <hr>
+                        <center><h3><label>Barang Tujuan</label></h3></center>
+                        <hr>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3" >Nama Barang</label>
+                            <div class="col-xs-9">
+                                <select name="nabar_adjust" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Kategori" data-width="80%" placeholder="Pilih Barang" required>
+                                <?php foreach ($data->result_array() as $k2) {
+                                    $id_kat=$k2['barang_id'];
+                                    $nm_kat=$k2['barang_nama'];
+                                    if($id_kat==$kat_id)
+                                        echo "<option value='$id_kat' selected>$nm_kat</option>";
+                                    else
+                                        echo "<option value='$id_kat'>$nm_kat|$id_kat</option>";
+                                }
+                                ?>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="control-label col-xs-3" >Jumlah Adjusment</label>
+                            <div class="col-xs-9">
+                                <input name="stok_adjust" class="harpok form-control" type="text"  placeholder="Harga Pokok..." style="width:335px;" required>
+                            </div>
+                        </div>
                     </div>
                         <div class="modal-footer">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>

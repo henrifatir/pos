@@ -148,7 +148,7 @@ class Pesan_barang extends CI_Controller{
 
 		$tglfak=$this->session->userdata('tglfak');
 		$suplier=$this->session->userdata('suplier');
-		$toko=$this->session->userdata('suplier');
+		$toko=$this->session->userdata('id_toko');
 		$nofak=$this->m_pesan_barang->get_nofak($toko);
 		if( !empty($tglfak) && !empty($suplier)){
 			$beli_kode=$this->m_pesan_barang->get_kobel();

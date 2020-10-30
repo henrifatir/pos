@@ -69,10 +69,34 @@ class M_laporan extends CI_Model{
 		$hsl=$this->db->query("SELECT * from tbl_beli order by beli_tanggal desc ");
 		return $hsl;
 	}
+	function get_nofak_pesan($id){
+		$hsl=$this->db->query("SELECT DISTINCT beli_kode,beli_tanggal,beli_suplier_id from tbl_pesan_barang where toko ='$id' order by beli_tanggal desc ");
+		return $hsl;
+	}
 	function get_jual_perbulan($bulan,$id){
 		$hsl=$this->db->query("SELECT jual_nofak,DATE_FORMAT(jual_tanggal,'%M %Y') AS bulan,DATE_FORMAT(jual_tanggal,'%d %M %Y') AS jual_tanggal,d_jual_barang_id,d_jual_barang_nama,d_jual_barang_satuan,d_jual_barang_harpok,d_jual_barang_harjul,d_jual_qty,d_jual_diskon,d_jual_total FROM tbl_jual JOIN tbl_detail_jual ON jual_nofak=d_jual_nofak WHERE DATE_FORMAT(jual_tanggal,'%M %Y')='$bulan' and toko='$id' ORDER BY jual_nofak DESC");
 		return $hsl;
 	}
+	function get_adjustmen($bulan,$id){
+		$hsl=$this->db->query("SELECT DISTINCT DATE_FORMAT(jual_tanggal,'%M %Y') AS bulan,DATE_FORMAT(jual_tanggal,'%d %M %Y') AS tanggal, FROM tbl_adjustmen ad inner join tbl_barang_toko t on ad.barang_id_awal=t.barang_id INNER JOIN tbl_barang_toko t2 on ad.barang_id_tujuan=t2.barang_id where toko ='2' ORDER BY jual_nofak DESC");
+		return $hsl;
+	}
+	function get_pesan_perbulan($id,$toko){
+		$hsl=$this->db->query("SELECT beli_kode,DATE_FORMAT(beli_tanggal,'%M %Y') AS bulan,DATE_FORMAT(beli_tanggal,'%d %M %Y') AS beli_tanggal,t.barang_nama as nama,d_beli_harga as harga,p.beli_suplier_id as toko_pesan,d.d_beli_jumlah as jumlah
+			FROM tbl_pesan_barang p inner join tbl_detail_pesan d on p.beli_kode=d.d_beli_kode
+	 inner join tbl_barang_toko t on d.d_beli_barang_id=t.barang_id where beli_kode='$id' and p.toko='$toko' and t.toko='$toko'  ORDER BY beli_kode DESC ");
+		return $hsl;
+	}
+	/*SELECT * FROM tbl_pesan_barang p inner join tbl_detail_pesan d on p.beli_kode=d.d_beli_kode
+	 inner join tbl_barang_toko t on d.d_beli_barang_id=t.barang_id where p.toko='2' and t.toko='2'
+*/
+	function get_pesan_perbulan_all($bulan,$id){
+		$hsl=$this->db->query("SELECT beli_kode,DATE_FORMAT(beli_tanggal,'%M %Y') AS bulan,DATE_FORMAT(beli_tanggal,'%d %M %Y') AS beli_tanggal,t.barang_nama as nama,d_beli_harga as harga,p.beli_suplier_id as toko_pesan,d.d_beli_jumlah as jumlah
+			FROM tbl_pesan_barang p inner join tbl_detail_pesan d on p.beli_kode=d.d_beli_kode
+	 inner join tbl_barang_toko t on d.d_beli_barang_id=t.barang_id where p.toko='$id' and t.toko='$id'  ORDER BY beli_kode DESC");
+		return $hsl;
+	}
+
 	function get_jual_perbulan_all($bulan){
 		$hsl=$this->db->query("SELECT jual_nofak,DATE_FORMAT(jual_tanggal,'%M %Y') AS bulan,DATE_FORMAT(jual_tanggal,'%d %M %Y') AS jual_tanggal,d_jual_barang_id,d_jual_barang_nama,d_jual_barang_satuan,d_jual_barang_harpok,d_jual_barang_harjul,d_jual_qty,d_jual_diskon,d_jual_total FROM tbl_jual JOIN tbl_detail_jual ON jual_nofak=d_jual_nofak WHERE DATE_FORMAT(jual_tanggal,'%M %Y')='$bulan'  ORDER BY jual_nofak DESC");
 		return $hsl;
@@ -85,6 +109,11 @@ class M_laporan extends CI_Model{
 		$hsl=$this->db->query("SELECT jual_nofak,DATE_FORMAT(jual_tanggal,'%M %Y') AS bulan,DATE_FORMAT(jual_tanggal,'%d %M %Y') AS jual_tanggal,d_jual_barang_id,d_jual_barang_nama,d_jual_barang_satuan,d_jual_barang_harpok,d_jual_barang_harjul,d_jual_qty,d_jual_diskon,SUM(d_jual_total) as total FROM tbl_jual JOIN tbl_detail_jual ON jual_nofak=d_jual_nofak WHERE DATE_FORMAT(jual_tanggal,'%M %Y')='$bulan' and toko='$id' ORDER BY jual_nofak DESC");
 		return $hsl;
 	}
+	function get_total_pesan_perbulan($bulan,$id){
+		$hsl=$this->db->query("SELECT jual_nofak,DATE_FORMAT(jual_tanggal,'%M %Y') AS bulan,DATE_FORMAT(jual_tanggal,'%d %M %Y') AS jual_tanggal,d_jual_barang_id,d_jual_barang_nama,d_jual_barang_satuan,d_jual_barang_harpok,d_jual_barang_harjul,d_jual_qty,d_jual_diskon,SUM(d_jual_total) as total FROM tbl_jual JOIN tbl_detail_jual ON jual_nofak=d_jual_nofak WHERE DATE_FORMAT(jual_tanggal,'%M %Y')='$bulan' and toko='$id' ORDER BY jual_nofak DESC");
+		return $hsl;
+	}
+	//get_pesan_perbulan_all
 	function get_total_jual_perbulan_all($bulan){
 		$hsl=$this->db->query("SELECT jual_nofak,DATE_FORMAT(jual_tanggal,'%M %Y') AS bulan,DATE_FORMAT(jual_tanggal,'%d %M %Y') AS jual_tanggal,d_jual_barang_id,d_jual_barang_nama,d_jual_barang_satuan,d_jual_barang_harpok,d_jual_barang_harjul,d_jual_qty,d_jual_diskon,SUM(d_jual_total) as total FROM tbl_jual JOIN tbl_detail_jual ON jual_nofak=d_jual_nofak WHERE DATE_FORMAT(jual_tanggal,'%M %Y')='$bulan' ORDER BY jual_nofak DESC");
 		return $hsl;

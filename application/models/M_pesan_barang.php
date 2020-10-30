@@ -1,12 +1,12 @@
 <?php
 class M_pesan_barang extends CI_Model{
 
-	function simpan_pembelian($tglfak,$suplier,$beli_kode,$toko){
+	function simpan_pembelian($tglfak,$suplier,$beli_kode,$toko,$nofak){
 		$idadmin=$this->session->userdata('idadmin');
-		$this->db->query("INSERT INTO tbl_pesan_barang (beli_nofak,beli_tanggal,beli_suplier_id,beli_user_id,beli_kode,toko) VALUES ('','$tglfak','$suplier','$idadmin','$beli_kode','$toko')");
+		$this->db->query("INSERT INTO tbl_pesan_barang (beli_nofak,beli_tanggal,beli_suplier_id,beli_user_id,beli_kode,toko) VALUES ('$nofak','$tglfak','$suplier','$idadmin','$beli_kode','$toko')");
 		foreach ($this->cart->contents() as $item) {
 			$data=array(
-				'd_beli_nofak' 		=>	'',
+				'd_beli_nofak' 		=>	$nofak,
 				'd_beli_barang_id'	=>	$item['id'],
 				'd_beli_harga'		=>	$item['price'],
 				'd_beli_jumlah'		=>	$item['qty'],
@@ -30,5 +30,10 @@ class M_pesan_barang extends CI_Model{
             $kd = "000001";
         }
         return "PN".date('dmy').$kd;
+	}
+	function get_nofak($id){
+		$q = $this->db->query("SELECT count(*) + 1 as jumlah FROM tbl_pesan_barang  ");
+     	$tmp=$q->row()->jumlah;
+        return $tmp;
 	}
 }

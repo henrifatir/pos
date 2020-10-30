@@ -132,6 +132,47 @@
 
         <!-- Projects Row -->
         <div class="row">
+         <?php if($h=='3'){ ?> 
+          
+            <div class="col-md-3 portfolio-item">
+                <div class="menu-item color" style="height:150px;">
+                     <a href="#" data-toggle="modal">
+                           <i class="fa fa-sitemap"></i>
+                            <p style="text-align:left;font-size:14px;padding-left:5px;">Kategori</p>
+                      </a>
+                </div> 
+            </div>
+               <div class="col-md-3 portfolio-item">
+                <div class="menu-item purple" style="height:150px;">
+                     <a href="<?php echo base_url().'admin/Barang'?>" data-toggle="modal">
+                           <i class="fa fa-shopping-cart"></i>
+                            <p style="text-align:left;font-size:14px;padding-left:5px;">Barang</p>
+                      </a>
+                </div> 
+            </div>
+              <div class="col-md-3 portfolio-item">
+                <div class="menu-item red" style="height:150px;">
+                     <a href="<?php echo base_url().'admin/Pesan_barang'?>" data-toggle="modal">
+                           <i class="fa fa-shopping-cart"></i>
+                            <p style="text-align:left;font-size:14px;padding-left:5px;">Pesan Barang</p>
+                      </a>
+                </div> 
+            </div>
+              <div class="col-md-3 portfolio-item">
+                <div class="menu-item blue" style="height:150px;">
+                     <a href="<?php echo base_url().'admin/Pindah_barang'?>" data-toggle="modal">
+                           <i class="fa fa-shopping-cart"></i>
+                            <p style="text-align:left;font-size:14px;padding-left:5px;">Pindah Barang</p>
+                      </a>
+                </div> 
+            </div>
+            <?php }?>
+        </div>
+        
+        <!-- /.row -->
+
+        <!-- Projects Row -->
+        <div class="row">
         <?php if($h=='1'){ ?> 
             <div class="col-md-3 portfolio-item">
                 <div class="menu-item purple" style="height:150px;">

@@ -136,6 +136,9 @@
                             <select name="level" class="form-control" style="width:280px;" required>
                                 <option value="1">Admin</option>
                                 <option value="2">Kasir</option>
+                                <option value="3">Gudang</option>
+                                <option value="4">Keuangan</option>
+                    
                             </select>
                         </div>
                     </div>   

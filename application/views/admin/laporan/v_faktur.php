@@ -1,6 +1,6 @@
 <html lang="en" moznomarginboxes mozdisallowselectionprint>
 <head>
-    <title>Faktur Penjualan Barang</title>
+    <title>Struk Penjualan</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/laporan.css')?>"/>
 </head>
@@ -94,7 +94,7 @@ $no=0;
 </table>
 <table align="center" style="width:700px; border:none;margin-top:5px;margin-bottom:20px;">
     <tr>
-        <td align="right">Padang, <?php echo date('d-M-Y')?></td>
+        <td align="right">Madiun, <?php echo date('d-M-Y')?></td>
     </tr>
     <tr>
         <td align="right"></td>

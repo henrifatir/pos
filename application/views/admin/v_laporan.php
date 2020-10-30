@@ -112,10 +112,24 @@
                         </td>
                     </tr>
                       <tr>
-                        <td style="text-align:center;vertical-align:middle">7</td>
+                        <td style="text-align:center;vertical-align:middle">8</td>
                         <td style="vertical-align:middle;">Laporan Pembelian</td>
                         <td style="text-align:center;">
                             <a class="btn btn-sm btn-default" href="#lap_laba_rugi" data-toggle="modal"><span class="fa fa-print"></span> Print</a>
+                        </td>
+                    </tr>
+                      <tr>
+                        <td style="text-align:center;vertical-align:middle">9</td>
+                        <td style="vertical-align:middle;">Laporan Pesanan Barang Per Transaksi</td>
+                        <td style="text-align:center;">
+                            <a class="btn btn-sm btn-default" href="#lap_pesan_perbulan" data-toggle="modal"><span class="fa fa-print"></span> Print</a>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style="text-align:center;vertical-align:middle">10</td>
+                        <td style="vertical-align:middle;">Laporan Pesanan Barang PerBulan</td>
+                        <td style="text-align:center;">
+                            <a class="btn btn-sm btn-default" href="#lap_pesan_perbulan_all" data-toggle="modal"><span class="fa fa-print"></span> Print</a>
                         </td>
                     </tr>
               
@@ -171,6 +185,76 @@
                 <div class="modal-body">
 
                     <div class="form-group">
+                        <label class="control-label col-xs-3" >Bulan</label>
+                        <div class="col-xs-9">
+                                <select name="bln" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Bulan" data-width="80%" required/>
+                                <?php foreach ($jual_bln->result_array() as $k) {
+                                    $bln=$k['bulan'];
+                                ?>
+                                    <option><?php echo $bln;?></option>
+                                <?php }?>
+                                </select>
+                        </div>
+                    </div>
+                           
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                    <button class="btn btn-info"><span class="fa fa-print"></span> Cetak</button>
+                </div>
+            </form>
+            </div>
+            </div>
+        </div>
+         <!-- ============ MODAL ADD =============== -->
+        <div class="modal fade" id="lap_pesan_perbulan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title" id="myModalLabel">Pilih Kode Pesan</h3>
+            </div>
+            <form class="form-horizontal" method="post" action="<?php echo base_url().'admin/laporan/lap_pesan_perkode'?>" target="_blank">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" >Kode Pesan</label>
+                        <div class="col-xs-9">
+                                <select name="bln" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Kode Pesan" data-width="80%" required/>
+                                <?php foreach ($nofak_pesan->result_array() as $k) {
+                                    $bln=$k['beli_kode'];
+                                ?>
+                                    <option><?php echo $bln;?></option>
+                                <?php }?>
+                                </select>
+                        </div>
+                    </div>
+                           
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                    <button class="btn btn-info"><span class="fa fa-print"></span> Cetak</button>
+                </div>
+            </form>
+            </div>
+            </div>
+        </div>
+          <!-- ============ MODAL ADD =============== -->
+        <div class="modal fade" id="lap_pesan_perbulan_all" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title" id="myModalLabel">Pilih Bulan</h3>
+            </div>
+            <form class="form-horizontal" method="post" action="<?php echo base_url().'admin/laporan/lap_pesan_perbulan_all'?>" target="_blank">
+                <div class="modal-body">
+
+                     <div class="form-group">
                         <label class="control-label col-xs-3" >Bulan</label>
                         <div class="col-xs-9">
                                 <select name="bln" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Bulan" data-width="80%" required/>

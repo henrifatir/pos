@@ -31,9 +31,23 @@ class Pembelian extends CI_Controller{
         echo "Halaman tidak ditemukan";
     }
 	}
+	
+	function sesi_nofak(){
+		$this->session->unset_userdata('nofak');
+		$nofak=$this->input->post('nofak');
+		$this->session->set_userdata('nofak',$nofak);
+		$this->session->unset_userdata('tglfak');
+		$tglfak=$this->input->post('tgl');
+		$this->session->set_userdata('tglfak',$tglfak);
+		$this->session->unset_userdata('suplier');
+		$suplier=$this->input->post('suplier');
+		$this->session->set_userdata('suplier',$suplier);
+	
+	}
 	function add_to_cart_beli(){
 	if($this->session->userdata('akses')=='1' || $this->session->userdata('akses')=='2'){
         $id_toko=$this->session->userdata('id_toko');
+		
 		$kobar=$this->input->post('kode_brg');
 		$produk=$this->m_barang->get_barang($kobar,$id_toko);
 		$i=$produk->row_array();
@@ -68,8 +82,9 @@ class Pembelian extends CI_Controller{
 	}else{
 		$this->cart->insert($data);
 	}
-
-		redirect('admin/pembelian');
+	//$id_toko=$this->session->userdata('id_toko');
+		
+		redirect('admin/pembelian',$data);
 	}else{
         echo "Halaman tidak ditemukan";
     }
@@ -80,9 +95,9 @@ class Pembelian extends CI_Controller{
 		$tgl=$this->input->post('tgl');
 		$toko=$this->session->userdata('id_toko');
 		$suplier=$this->input->post('suplier');
-		$this->session->set_userdata('nofak',$nofak);
+	/*	$this->session->set_userdata('nofak',$nofak);
 		$this->session->set_userdata('tglfak',$tgl);
-		$this->session->set_userdata('suplier',$suplier);
+		$this->session->set_userdata('suplier',$suplier);*/
 		$kobar=$this->input->post('kode_brg');
 		$produk=$this->m_barang->get_barang($kobar,$toko);
 		$i=$produk->row_array();
@@ -134,6 +149,7 @@ class Pembelian extends CI_Controller{
 	function simpan_pembelian(){
 	if($this->session->userdata('akses')=='1'){
 		$toko=$this->session->userdata('id_toko');
+		$kobar=$this->input->post('kode_brg');
 		$nofak=$this->session->userdata('nofak');
 		$tglfak=$this->session->userdata('tglfak');
 		$suplier=$this->session->userdata('suplier');

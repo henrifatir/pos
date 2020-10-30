@@ -39,6 +39,28 @@ class Administrator extends CI_Controller{
              $this->session->set_userdata('toko',$toko);
              $this->session->set_userdata('id_toko',$id_toko);
          } //Front Office
+            if($xcadmin['user_level']=='3'){
+             $this->session->set_userdata('akses','3');
+             $idadmin=$xcadmin['user_id'];
+             $user_nama=$xcadmin['user_nama'];
+             $toko=$xcadmin['nama'];
+             $id_toko=$xcadmin['id'];
+             $this->session->set_userdata('idadmin',$idadmin);
+             $this->session->set_userdata('nama',$user_nama);
+             $this->session->set_userdata('toko',$toko);
+             $this->session->set_userdata('id_toko',$id_toko);
+         } //Gudang
+            if($xcadmin['user_level']=='4'){
+             $this->session->set_userdata('akses','4');
+             $idadmin=$xcadmin['user_id'];
+             $user_nama=$xcadmin['user_nama'];
+             $toko=$xcadmin['nama'];
+             $id_toko=$xcadmin['id'];
+             $this->session->set_userdata('idadmin',$idadmin);
+             $this->session->set_userdata('nama',$user_nama);
+             $this->session->set_userdata('toko',$toko);
+             $this->session->set_userdata('id_toko',$id_toko);
+         } //Keuangan
          
         }
         

@@ -39,7 +39,7 @@
             <center><?php echo $this->session->flashdata('msg');?></center>
                 <h1 class="page-header">Pembelian
                     <small>Barang</small>
-                    <a href="#" data-toggle="modal" data-target="#largeModal" class="pull-right"><small>Bantuan?</small></a>
+                    <a href="#" data-toggle="modal" data-target="#largeModal" class="pull-right"><small >Bantuan?</small></a>
                     
                 </h1>
             </div>
@@ -52,11 +52,8 @@
             <form  id='form1' action="<?php echo base_url().'admin/pembelian/add_to_cart'?>" method="post">
             <table>
                 <tr>
-                    <th style="width:100px;padding-bottom:5px;">No Faktur</th>
-                    <th style="width:300px;padding-bottom:5px;"><input type="text" name="nofak" value="<?php echo $this->session->userdata('nofak');?>" class="form-control input-sm" style="width:200px;" required></th>
-                    <th style="width:90px;padding-bottom:5px;">Suplier</th>
-                    <td style="width:350px;">
-                    <select name="suplier" class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Suplier" data-width="100%" required>
+                    <th style="width:100px;padding-bottom:5px;">Suplier</th>
+                    <th style="width:350px;padding-bottom:5px;"><select name="suplier" id="suplier"  class="selectpicker show-tick form-control" data-live-search="true" title="Pilih Suplier" data-width="100%" required>
                         <?php foreach ($sup->result_array() as $i) {
                             $id_sup=$i['suplier_id'];
                             $nm_sup=$i['suplier_nama'];
@@ -68,14 +65,20 @@
                             else
                                 echo "<option value='$id_sup'>$nm_sup - $al_sup - $notelp_sup</option>";
                         }?>
-                    </select>
+                    </select></th>
+                    <th style="width:50px;"></th>
+                    <th style="width:90px;padding-bottom:5px;">No Faktur</th>
+
+                    <td style="width:300px;">
+                     <input type="text" name="nofak" id="nofak" value="<?php echo $this->session->userdata('nofak');?>" class="form-control input-sm" style="width:200px;" required>   
+                    
                     </td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>
                     <td>
                         <div class='input-group date' id='datepicker' style="width:200px;">
-                            <input type='text' name="tgl" class="form-control" value="<?php echo $this->session->userdata('tglfak');?>" placeholder="Tanggal..." required/>
+                            <input type='text' name="tgl" id="tgl"  class="form-control" value="<?php echo $this->session->userdata('tglfak');?>" placeholder="Tanggal..." required/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -146,6 +149,7 @@
                 <h3 class="modal-title" id="myModalLabel">Data Barang</h3>
             </div>
                 <div class="modal-body" style="overflow:scroll;height:500px;">
+                   
                       <table class="table table-bordered table-condensed" style="font-size:11px;" id="mydatabeli">
                     <thead>
                         <tr>
@@ -274,8 +278,21 @@
     <script type="text/javascript">
         $(document).ready(function(){
             //Ajax kabupaten/kota insert
+            //var cari=$('#cari').val();
             $("#cari").focus();
-            $("#kode_brg").keyup(function(){
+           
+            $("#nofak").keyup(function(){
+             
+                   $.ajax({
+               type: "POST",
+               url : "<?php echo base_url().'admin/pembelian/sesi_nofak';?>",
+               data: {nofak:$('#nofak').val(),tgl:$('#tgl').val(),suplier:$('#suplier').val()},
+               success: function(msg){
+              // $('#detail_barang').html(msg);
+               }
+            });
+            }); 
+              $("#kode_brg").keyup(function(){
                 var kobar = {kode_brg:$(this).val()};
                    $.ajax({
                type: "POST",
@@ -293,7 +310,21 @@
                 }
             });
         });
+
     </script>
+  <!--   <script type="text/javascript">
+         function sesi_tgl(){
+                var kobar = {tgl:$(this).val()};
+                   $.ajax({
+               type: "POST",
+               url : "<?php echo base_url().'admin/pembelian/sesi_tgl';?>",
+               data: kobar,
+               success: function(msg){
+              // $('#detail_barang').html(msg);
+               }
+            });
+            }
+    </script> -->
        <script type="text/javascript">
          $("#cari").keypress(function(e){
                 if(e.which==13){

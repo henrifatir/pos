@@ -24,6 +24,7 @@ class Laporan extends CI_Controller{
 		$data['jual_thn_all']=$this->m_laporan->get_tahun_jual_all($id_toko);
 		$data['jual_thn']=$this->m_laporan->get_tahun_jual_all();
 		$data['nofak']=$this->m_laporan->get_nofak();
+		$data['nofak_pesan']=$this->m_laporan->get_nofak_pesan($id_toko);
 		$this->load->view('admin/v_laporan',$data);
 	}else{
         echo "Halaman tidak ditemukan";
@@ -58,6 +59,18 @@ class Laporan extends CI_Controller{
 		$x['jml']=$this->m_laporan->get_total_jual_perbulan($bulan,$id_toko);
 		$x['data']=$this->m_laporan->get_jual_perbulan($bulan,$id_toko);
 		$this->load->view('admin/laporan/v_lap_jual_perbulan',$x);
+	}
+		function lap_pesan_perkode(){
+		$id_toko=$this->session->userdata('id_toko');
+		$bulan=$this->input->post('bln');
+		$x['data']=$this->m_laporan->get_pesan_perbulan($bulan,$id_toko);
+		$this->load->view('admin/laporan/v_lap_pesan_perbulan',$x);
+	}
+	function lap_pesan_perbulan_all(){
+		$id_toko=$this->session->userdata('id_toko');
+		$bulan=$this->input->post('bln');
+		$x['data']=$this->m_laporan->get_pesan_perbulan_all($bulan,$id_toko);
+		$this->load->view('admin/laporan/v_lap_pesan_perbulan_all',$x);
 	}
 	function lap_pembelian(){
 		$id_toko=$this->session->userdata('id_toko');

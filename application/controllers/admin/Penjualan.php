@@ -97,7 +97,6 @@ class Penjualan extends CI_Controller{
                 $order_proses=$this->m_penjualan->simpan_penjualan($nofak,$total,$jml_uang,$kembalian,$id_toko);
                 if($order_proses){
                     $this->cart->destroy();
-                    
                     $this->session->unset_userdata('tglfak');
                     $this->session->unset_userdata('suplier');
                     $this->load->view('admin/alert/alert_sukses');  
@@ -138,9 +137,9 @@ class Penjualan extends CI_Controller{
 
 	function cetak_faktur(){
 		$x['data']=$this->m_penjualan->cetak_faktur();
-		//$this->load->view('admin/laporan/v_faktur',$x);
-		//$this->session->unset_userdata('nofak');
-		$this->cetak_struk();
+		$this->load->view('admin/laporan/v_faktur',$x);
+		$this->session->unset_userdata('nofak');
+		//$this->cetak_struk();
 	}
 	public function cetak_struk() {
         // me-load library escpos

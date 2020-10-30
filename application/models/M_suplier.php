@@ -15,6 +15,10 @@ class M_suplier extends CI_Model{
 		$hsl=$this->db->query("select * from tbl_suplier order by suplier_id desc");
 		return $hsl;
 	}
+		function tampil_toko($id){
+		$hsl=$this->db->query("select * from tbl_toko where id not in ('$id') ");
+		return $hsl;
+	}
 
 	function simpan_suplier($nama,$alamat,$notelp){
 		$hsl=$this->db->query("INSERT INTO tbl_suplier(suplier_nama,suplier_alamat,suplier_notelp) VALUES ('$nama','$alamat','$notelp')");

@@ -1,6 +1,6 @@
 <html lang="en" moznomarginboxes mozdisallowselectionprint>
 <head>
-    <title>Laporan Penjualan Pertanggal</title>
+    <title>Laporan Pesan Pertanggal</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/laporan.css')?>"/>
 </head>

@@ -13,7 +13,7 @@ class Kategori extends CI_Controller{
 		$data['data']=$this->m_kategori->tampil_kategori();
 		$this->load->view('admin/v_kategori',$data);
 	}else{
-        echo "Halaman";
+        echo "Halaman tidak ditemukan";
     }
 	}
 	function tambah_kategori(){

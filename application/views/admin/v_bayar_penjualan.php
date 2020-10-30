@@ -72,7 +72,7 @@
                         $suplier=$a['jual_keterangan'];
                 ?>
                     <tr>
-                        <?php if ($total_beli==$total_bayar) {
+                        <?php if ($total_beli<=$total_bayar) {
                             $warna='white';
                       
                         }else{

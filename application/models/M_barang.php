@@ -11,6 +11,16 @@ class M_barang extends CI_Model{
 		$hsl=$this->db->query("UPDATE tbl_barang_toko SET barang_nama='$nabar',barang_satuan='$satuan',barang_harpok='$harpok',barang_harjul='$harjul',barang_harjul_grosir='$harjul_grosir',barang_stok='$stok',barang_min_stok='$min_stok',barang_tgl_last_update=NOW(),barang_kategori_id='$kat',barang_user_id='$user_id' WHERE barang_id='$kobar'");
 		return $hsl;
 	}
+	function update_barang_awal($kobar,$stok,$toko){
+		$user_id=$this->session->userdata('idadmin');
+		$hsl=$this->db->query("UPDATE tbl_barang_toko SET barang_stok=barang_stok - '$stok',barang_tgl_last_update=NOW() WHERE barang_id='$kobar' and toko='$toko'");
+		return $hsl;
+	}
+	function update_barang_tujuan($kobar,$stok,$toko){
+		$user_id=$this->session->userdata('idadmin');
+		$hsl=$this->db->query("UPDATE tbl_barang_toko SET barang_stok= barang_stok + '$stok',barang_tgl_last_update=NOW() WHERE barang_id='$kobar' and toko='$toko'");
+		return $hsl;
+	}
     function tampil_pasien(){
     	$hsl=$this->db->query("SELECT kode_pasien,tgl_masuk,nama_pasien from tbl_scan");
     	return $hsl;
@@ -33,7 +43,16 @@ class M_barang extends CI_Model{
 		$hsl=$this->db->query("INSERT INTO tbl_barang_toko (barang_id,barang_nama,barang_satuan,barang_harpok,barang_harjul,barang_harjul_grosir,barang_stok,barang_min_stok,barang_kategori_id,barang_user_id,toko) VALUES ('$kobar','$nabar','$satuan','$harpok','$harjul','$harjul_grosir','$stok','$min_stok','$kat','$user_id','$id_toko')");
 		return $hsl;
 	}
-
+		function simpan_adjust_awal($kobar,$stok,$id_toko){
+		$user_id=$this->session->userdata('idadmin');
+		$hsl=$this->db->query("INSERT INTO tbl_adjustmen (id,barang_id,status_adjustmen,stok,tgl_adjust,user,toko) VALUES ('','$kobar','1','$stok',NOW(),'$user_id','$id_toko')");
+		return $hsl;
+	}
+        function simpan_adjust_tujuan($nabar,$stok,$id_toko){
+		$user_id=$this->session->userdata('idadmin');
+		$hsl=$this->db->query("INSERT INTO tbl_adjustmen (id,barang_id,status_adjustmen,stok,tgl_adjust,user,toko) VALUES ('','$nabar','2','$stok',NOW(),'$user_id','$id_toko')");
+		return $hsl;
+	}
 
 	function get_barang($kobar,$toko){
 		$hsl=$this->db->query("SELECT * FROM tbl_barang_toko where barang_id='$kobar' and toko='$toko'");

@@ -107,6 +107,23 @@ class Barang extends CI_Controller{
         echo "Halaman tidak ditemukan";
     }
 	}
+	function adjust_barang(){
+	if($this->session->userdata('akses')=='1'){
+		$id_toko=$this->session->userdata('id_toko');
+		$kobar=$this->input->post('kobar');
+		$nabar_adjust=$this->input->post('nabar_adjust');
+		$stok=$this->input->post('stok');
+		$stok_adjust=$this->input->post('stok_adjust');
+		$this->m_barang->update_barang_awal($kobar,$stok_adjust,$id_toko);
+		$this->m_barang->update_barang_tujuan($nabar_adjust,$stok_adjust,$id_toko);
+		$this->m_barang->simpan_adjust_awal($kobar,$stok_adjust,$id_toko);
+		$this->m_barang->simpan_adjust_tujuan($nabar_adjust,$stok_adjust,$id_toko);
+
+		redirect('admin/barang');
+	}else{
+        echo "Halaman tidak ditemukan";
+    }
+	}
 	function hapus_barang(){
 	if($this->session->userdata('akses')=='1'){
 		$kode=$this->input->post('kode');
